@@ -4,15 +4,15 @@ import {
   studentCreate,
   studentDestroy,
   studentIndex,
-  // alunoUpdate,
+  studentUpdate,
 } from "../controllers/studentController.js";
 
 const studentRouter = Router();
 
 studentRouter
-  .get('/', studentIndex)
+  .get("/", studentIndex)
   .post("/", validateStudent, studentCreate)
-  .delete('/:id', studentDestroy);
-// .put('/update/:id', alunoUpdate)
+  .delete("/:id", studentDestroy)
+  .put("/:id", validateStudent, studentUpdate);
 
 export default studentRouter;
