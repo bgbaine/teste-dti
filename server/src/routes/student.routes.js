@@ -2,17 +2,17 @@ import { Router } from "express";
 import { validateStudent } from "../middlewares/validation.js";
 import {
   studentCreate,
-  // studentDestroy,
+  studentDestroy,
   studentIndex,
   // alunoUpdate,
-} from "../controllers/alunoController.js";
+} from "../controllers/studentController.js";
 
 const studentRouter = Router();
 
 studentRouter
   .get('/', studentIndex)
   .post("/", validateStudent, studentCreate)
-  // .delete('/:id', studentDestroy);
+  .delete('/:id', studentDestroy);
 // .put('/update/:id', alunoUpdate)
 
 export default studentRouter;
