@@ -37,10 +37,9 @@ export const schemaAluno = z.object({
 export const validateAluno = (req, res, next) => {
   try {
     schemaAluno.parse(req.body);
-    console.log("passou aqui");
-    
+
     next();
   } catch (error) {
-    res.status(400).json({ errors: error.errors });
+    res.status(400).json(`Desculpe, um erro ocorreu validando o aluno. Erro: ${error}`);
   }
 };
