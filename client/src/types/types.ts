@@ -26,6 +26,6 @@ export interface ClassData {
 
 export interface StudentTableProps {
   classData: ClassData;
-  editStudent: (id: number) => void;
+  editStudent: (student: StudentData) => void;
   deleteStudent: (id: number) => void;
 }
