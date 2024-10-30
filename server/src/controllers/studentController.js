@@ -127,3 +127,22 @@ export const studentEdit = async (req, res) => {
       .json(`Desculpe, ocorreu um erro no servidor! Erro: ${error}`);
   }
 };
+
+export const studentUpdate = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const student = await prisma.aluno.update({
+      where: { id: Number(id) },
+      data: req.body,
+    });
+    res.status(200).json(student);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      res.status(400).json({ errors: error.errors });
+    } else {
+      res
+        .status(500)
+        .json(`Desculpe, ocorreu um erro no servidor! Erro: ${error}`);
+    }
+  }
+};
