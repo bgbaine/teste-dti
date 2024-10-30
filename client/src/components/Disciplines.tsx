@@ -18,14 +18,14 @@ const Disciplines: React.FC<DisciplinesProps> = ({ register }) => {
     <div>
       {disciplines.map((discipline) => (
         <div key={discipline.id}>
-          <label htmlFor={discipline.id}>{discipline.label}: </label>
+          <label htmlFor={`nota${discipline.id}`}>{discipline.label}: </label>
           <input
             type="number"
-            id={discipline.id}
+            id={`nota${discipline.id}`}
             min="0"
             max="10"
             required
-            {...register(`disciplina${discipline.id}` as keyof StudentData)}
+            {...register(`nota${discipline.id}` as keyof StudentData)}
           />
         </div>
       ))}
