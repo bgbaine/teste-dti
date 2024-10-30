@@ -174,6 +174,7 @@ Obs:
 - O tamanho do projeto fez com que o Next.js não fosse cogitado.
 - Como mencionado anteriormente, os testes unitários não foram implementados por questão de tempo (prioridades), apesar de saber da importância destes não só para testes como também para o desenvolvimento (test driven development). Apenas não me senti a vontade com o tempo que tinha.
 - Apesar da existência dos botões 'Editar' e 'Deletar', estes foram apenas parcialmente implementados, suas ações após pressionados apenas para depuração
+- Devido a tabela, a página apresenta dificuldades com a responsividade. Dependências como react-table foram testadas, porém sem sucesso.
 
 ## Informações Adicionais
 
