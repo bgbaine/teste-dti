@@ -72,20 +72,27 @@ function App() {
     alert(`you pressed ${id}`);
   };
 
-  const deleteStudent = (id: number) => {
-    /* try {
-      fetch(`http://localhost:3001/students/${id}`, {
-        method: "DELETE",
-      });
+  const deleteStudent = async (id: number) => {
+    if (confirm("Tem certeza que deseja deletar este aluno?")) {
+      try {
+        const response = await fetch(`http://localhost:3001/students/${id}`, {
+          method: "DELETE",
+        });
 
-      fetchClassData();
-    } catch (error) {
-      console.error(
-        "Houve um problema enviando os dados para o servidor. Erro:",
-        error
-      );
-    } */
-    alert(`you pressed ${id}`);
+        if (!response.ok) {
+          throw new Error(
+            `O servidor respondeu, mas com um erro. Resposta: ${response.statusText}`
+          );
+        }
+
+        await fetchClassData();
+      } catch (error) {
+        console.error(
+          "Houve um problema enviando os dados para o servidor. Erro:",
+          error
+        );
+      }
+    }
   };
 
   const openForm = () => {
