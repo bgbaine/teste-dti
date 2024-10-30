@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ClassData, StudentData } from "./types/types";
 import Disciplines from "./components/Disciplines";
-import formatStudentData from "./utils/FormatStudentData";
+import FormatStudentData from "./utils/FormatStudentData";
 import { useEffect, useState } from "react";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
@@ -45,7 +45,7 @@ function App() {
     reset();
     setFocus("nome");
 
-    const formattedData = formatStudentData(data);
+    const formattedData = FormatStudentData(data);
     try {
       const method = currentStudent ? "PUT" : "POST";
       const url = currentStudent
@@ -105,8 +105,17 @@ function App() {
   };
 
   const openForm = () => {
+    setCurrentStudent(null);
+    reset({
+      nome: "",
+      nota1: "",
+      nota2: "",
+      nota3: "",
+      nota4: "",
+      nota5: "",
+      frequencia: "",
+    });
     setOpen(true);
-    reset();
     setFocus("nome");
   };
 
