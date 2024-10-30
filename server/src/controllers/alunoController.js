@@ -1,13 +1,17 @@
 import prisma from "../../prisma/prismaClient.js";
 import { z } from "zod";
 
-export const alunoIndex = async (req, res) => {
+export const studentIndex = async (req, res) => {
   try {
     const students = await prisma.aluno.findMany();
 
     const studentsWithAverage = students.map((student) => {
       const average = (
-        (student.nota1 + student.nota2 + student.nota3 + student.nota4 + student.nota5) /
+        (student.nota1 +
+          student.nota2 +
+          student.nota3 +
+          student.nota4 +
+          student.nota5) /
         5
       ).toFixed(0);
       return { ...student, average };
@@ -82,10 +86,10 @@ export const alunoIndex = async (req, res) => {
   }
 };
 
-export const alunoCreate = async (req, res) => {
+export const studentCreate = async (req, res) => {
   try {
-    const aluno = await prisma.aluno.create({ data: req.body });
-    res.status(201).json(aluno);
+    const student = await prisma.aluno.create({ data: req.body });
+    res.status(201).json(student);
   } catch (error) {
     if (error instanceof z.ZodError) {
       res.status(400).json({ errors: error.errors });
@@ -96,3 +100,15 @@ export const alunoCreate = async (req, res) => {
     }
   }
 };
+
+// export const studentDestroy = async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     await prisma.aluno.delete({ where: { id: Number(id) } });
+//     res.status(200).json("Aluno deletado com sucesso!");
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json(`Desculpe, ocorreu um erro no servidor! Erro: ${error}`);
+//   }
+// };

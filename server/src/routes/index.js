@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import alunoRouter from './aluno.routes.js';
+import studentRouter from './student.routes.js';
 
 
 const routes = Router();
-routes.use('/alunos', alunoRouter);
+routes.use('/students', studentRouter);
 
 export default routes;

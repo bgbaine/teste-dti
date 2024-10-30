@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const schemaAluno = z.object({
+export const studentSchema = z.object({
   nome: z.string().min(1, "Insira um nome"),
   nota1: z
     .number()
@@ -34,9 +34,9 @@ export const schemaAluno = z.object({
     .max(100, "Frequência deve ser um inteiro entre 0 e 100"),
 });
 
-export const validateAluno = (req, res, next) => {
+export const validateStudent = (req, res, next) => {
   try {
-    schemaAluno.parse(req.body);
+    studentSchema.parse(req.body);
 
     next();
   } catch (error) {
