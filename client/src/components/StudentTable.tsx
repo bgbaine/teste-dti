@@ -82,7 +82,7 @@ const StudentTable: React.FC<StudentTableProps> = ({
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap hidden md:table-cell">
                   <button
-                    onClick={() => editStudent(student.id)}
+                    onClick={() => editStudent(student)}
                     className="text-blue-600 hover:text-blue-900 font-semibold"
                   >
                     Editar
