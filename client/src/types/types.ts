@@ -1,9 +1,9 @@
 export interface StudentData {
     nome: string;
-    disciplina1: number;
-    disciplina2: number;
-    disciplina3: number;
-    disciplina4: number;
-    disciplina5: number;
+    nota1: number;
+    nota2: number;
+    nota3: number;
+    nota4: number;
+    nota5: number;
     frequencia: number;
 }
