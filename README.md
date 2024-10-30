@@ -119,6 +119,8 @@ Pronto! O sistema deve estar completamente funcional.
     <img src="media/index.png" alt="Descrição da Imagem" width="800"/>
 </div>
 
+- Caso a aplicação não integre com o Backend, verifique a porta em que o Frontend foi aberto. O Backend foi configurado com CORS para permitir conexões da porta 5173 até a porta 5179.
+
 - Para acessar o Backend, vá para `http://localhost:3001`:
 <div align="center">
     <img src="media/api.png" alt="Descrição da Imagem" width="800"/>
@@ -171,7 +173,8 @@ zod: Para verificações das requisições.
 Obs:
 - O tamanho do projeto fez com que o Next.js não fosse cogitado.
 - Como mencionado anteriormente, os testes unitários não foram implementados por questão de tempo (prioridades), apesar de saber da importância destes não só para testes como também para o desenvolvimento (test driven development). Apenas não me senti a vontade com o tempo que tinha.
-  
+- Apesar da existência dos botões 'Editar' e 'Deletar', estes foram apenas parcialmente implementados, suas ações após pressionados apenas para depuração
+
 ## Informações Adicionais
 
 - **Contato**: Para quaisquer dúvidas, você pode me contatar pelo e-mail [bgbaine@gmail.com](mailto:bgbaine@gmail.com) ou pelo número +55 (53) 98164-0674.
