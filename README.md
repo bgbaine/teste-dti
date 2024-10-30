@@ -36,7 +36,7 @@ Certifique-se de ter as seguintes ferramentas instaladas:
     ```
    Você deve encontrar o seguinte conteúdo dentro do diretório:
     ```bash
-    README.md  client  server
+    README.md  client  media  server
     ```
 
     - Caso não encontre, verifique se as ferramentas estão instaladas.
