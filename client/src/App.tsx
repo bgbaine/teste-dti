@@ -5,7 +5,8 @@ import FormatStudentData from "./utils/FormatStudentData";
 import { useEffect, useState } from "react";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import StudentTable from "./components/StudentTable"; // Adjust the import path as needed
+import StudentTable from "./components/StudentTable";
+import { Toaster, toast } from "sonner";
 
 function App() {
   const [nome, setNome] = useState("Carlos");
@@ -26,6 +27,7 @@ function App() {
       const response = await fetch("http://localhost:3001/students");
 
       if (!response.ok) {
+        toast.error("Houve um erro ao carregar a tabela!");
         throw new Error(
           `O servidor respondeu, mas com um erro. Resposta: ${response.statusText}`
         );
@@ -60,10 +62,15 @@ function App() {
       });
 
       if (!response.ok) {
+        toast.error("Houve um erro ao enviar os dados para o servidor!");
         throw new Error(
           `O servidor respondeu, mas com um erro. Resposta: ${response.statusText}`
         );
       }
+
+      method === "POST"
+        ? toast.success("Aluno inserido com sucesso!")
+        : toast.success("Aluno editado com sucesso!");
 
       setOpen(false);
       fetchClassData();
@@ -89,11 +96,13 @@ function App() {
         });
 
         if (!response.ok) {
+          toast.error("Houve um erro ao enviar os dados para o servidor!");
           throw new Error(
             `O servidor respondeu, mas com um erro. Resposta: ${response.statusText}`
           );
         }
 
+        toast.success("Aluno deletado com sucesso!");
         await fetchClassData();
       } catch (error) {
         console.error(
@@ -214,6 +223,7 @@ function App() {
             </div>
           </form>
         </Modal>
+        <Toaster position="top-right" richColors />
       </main>
     </>
   );
