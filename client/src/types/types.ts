@@ -1,12 +1,12 @@
 export interface StudentData {
   id: number;
   nome: string;
-  nota1: number;
-  nota2: number;
-  nota3: number;
-  nota4: number;
-  nota5: number;
-  frequencia: number;
+  nota1: number | string;
+  nota2: number | string;
+  nota3: number | string;
+  nota4: number | string;
+  nota5: number | string;
+  frequencia: number | string;
 }
 
 export interface ClassAverageBySubject {
