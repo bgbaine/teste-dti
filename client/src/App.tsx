@@ -1,16 +1,23 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { StudentData } from "./types/types";
+import { ClassData, StudentData } from "./types/types";
 import Disciplines from "./components/Disciplines";
-import formatStudentData from "./utils/formatStudentData";
+import formatStudentData from "./utils/FormatStudentData";
+import CalculateClassAverage from "./utils/CalculateClassAverage";
+import CalculateStudentAverage from "./utils/CalculateStudentAverage";
 import { useEffect, useState } from "react";
 
 function App() {
   const { register, handleSubmit, setFocus, reset } = useForm<StudentData>();
-  const [students, setStudents] = useState<StudentData[]>([]); // State to hold fetched data
+  const [classData, setClassData] = useState<ClassData>();
 
-  const getStudents = async () => {
+  useEffect(() => {
+    setFocus("nome");
+    fetchClassData();
+  }, []);
+
+  const fetchClassData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/aluno");
+      const response = await fetch("http://localhost:3001/alunos");
 
       if (!response.ok) {
         throw new Error(
@@ -18,8 +25,8 @@ function App() {
         );
       }
 
-      const studentList: StudentData[] = await response.json();
-      setStudents(studentList);
+      const classData: any = await response.json();
+      setClassData(classData);
     } catch (error) {
       console.error(
         "Houve um problema enviando os dados para o servidor. Erro:",
@@ -28,18 +35,13 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    setFocus("nome");
-    getStudents();
-  }, []);
-
   const submitStudentData: SubmitHandler<StudentData> = async (data) => {
     reset();
     setFocus("nome");
 
     const formattedData = formatStudentData(data);
     try {
-      const response = await fetch("http://localhost:3001/aluno", {
+      const response = await fetch("http://localhost:3001/alunos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +55,7 @@ function App() {
         );
       }
 
-      getStudents();
+      fetchClassData();
     } catch (error) {
       console.error(
         "Houve um problema enviando os dados para o servidor. Erro:",
@@ -62,55 +64,136 @@ function App() {
     }
   };
 
+  const editStudent = (id: number) => {
+    alert(`you pressed ${id}`);
+  };
+
+  const deleteStudent = (id: number) => {
+    alert(`you pressed ${id}`);
+  };
+
   return (
     <>
       <header className="flex justify-center items-center">
         <h1 className="text-4xl text-red-500">Olá, Carlos</h1>
       </header>
       <main className="flex flex-col justify-center items-center">
-        {students.length > 0 && (
+        {classData && (
           <div>
             <h2 className="text-center">Estudantes Cadastrados:</h2>
-            <table className="min-w-full border-collapse border border-gray-300">
-              <thead>
-                <tr>
-                  <th className="border border-gray-300 p-2">Nome</th>
-                  <th className="border border-gray-300 p-2">Disciplina 1</th>
-                  <th className="border border-gray-300 p-2">Disciplina 2</th>
-                  <th className="border border-gray-300 p-2">Disciplina 3</th>
-                  <th className="border border-gray-300 p-2">Disciplina 4</th>
-                  <th className="border border-gray-300 p-2">Disciplina 5</th>
-                  <th className="border border-gray-300 p-2">Frequência</th>
-                </tr>
-              </thead>
-              <tbody>
-                {students.map((student, index) => (
-                  <tr key={index}>
-                    <td className="border border-gray-300 p-2">
-                      {student.nome}
-                    </td>
-                    <td className="border border-gray-300 p-2">
-                      {student.nota1}
-                    </td>
-                    <td className="border border-gray-300 p-2">
-                      {student.nota2}
-                    </td>
-                    <td className="border border-gray-300 p-2">
-                      {student.nota3}
-                    </td>
-                    <td className="border border-gray-300 p-2">
-                      {student.nota4}
-                    </td>
-                    <td className="border border-gray-300 p-2">
-                      {student.nota5}
-                    </td>
-                    <td className="border border-gray-300 p-2">
-                      {student.frequencia}
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs sm:text-sm md:text-base font-medium text-gray-500 uppercase tracking-wider">
+                      Nome
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs sm:text-sm md:text-base font-medium text-gray-500 uppercase tracking-wider">
+                      Nota 1
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs sm:text-sm md:text-base font-medium text-gray-500 uppercase tracking-wider">
+                      Nota 2
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs sm:text-sm md:text-base font-medium text-gray-500 uppercase tracking-wider">
+                      Nota 3
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs sm:text-sm md:text-base font-medium text-gray-500 uppercase tracking-wider">
+                      Nota 4
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs sm:text-sm md:text-base font-medium text-gray-500 uppercase tracking-wider">
+                      Nota 5
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs sm:text-sm md:text-base font-medium text-gray-500 uppercase tracking-wider">
+                      Frequência
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs sm:text-sm md:text-base font-medium text-gray-500 uppercase tracking-wider">
+                      Média
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs sm:text-sm md:text-base font-medium text-gray-500 uppercase tracking-wider">
+                      Ações
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {classData.students.map((student) => (
+                    <tr key={student.id} className="hover:bg-gray-100">
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {student.nome}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {student.nota1}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {student.nota2}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {student.nota3}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {student.nota4}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {student.nota5}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {student.frequencia}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {CalculateStudentAverage(student)}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        <button
+                          onClick={() => editStudent(student.id)}
+                          className="text-blue-600 hover:text-blue-900"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => deleteStudent(student.id)}
+                          className="text-red-600 hover:text-red-900 ml-2"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="bg-gray-100">
+                    <td className="px-4 py-4 font-bold">
+                      Média da turma por disciplina
+                    </td>
+                    <td className="px-4 py-4">
+                      {classData.classAverageBySubject.gradeAverage1}
+                    </td>
+                    <td className="px-4 py-4">
+                      {classData.classAverageBySubject.gradeAverage2}
+                    </td>
+                    <td className="px-4 py-4">
+                      {classData.classAverageBySubject.gradeAverage3}
+                    </td>
+                    <td className="px-4 py-4">
+                      {classData.classAverageBySubject.gradeAverage4}
+                    </td>
+                    <td className="px-4 py-4">
+                      {classData.classAverageBySubject.gradeAverage5}
+                    </td>
+                    <td className="px-4 py-4" colSpan={2}></td>{" "}
+                    <td className="px-4 py-4" colSpan={2}></td>{" "}
+                  </tr>
+                  <tr className="bg-gray-200">
+                    <td className="px-4 py-4 font-bold">
+                      Média Geral da turma
+                    </td>
+                    <td className="px-4 py-4" colSpan={6}>
+                      {CalculateClassAverage(classData.classAverageBySubject)}
+                    </td>
+                    <td className="px-4 py-4"></td>{" "}
+                    <td className="px-4 py-4"></td>{" "}
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
         )}
 
