@@ -11,6 +11,9 @@ function App() {
   const [nome, setNome] = useState("Carlos");
   const { register, handleSubmit, setFocus, reset } = useForm<StudentData>();
   const [open, setOpen] = useState(false);
+  const [currentStudent, setCurrentStudent] = useState<StudentData | null>(
+    null
+  );
   const [classData, setClassData] = useState<ClassData>();
 
   useEffect(() => {
@@ -44,8 +47,12 @@ function App() {
 
     const formattedData = formatStudentData(data);
     try {
-      const response = await fetch("http://localhost:3001/students", {
-        method: "POST",
+      const method = currentStudent ? "PUT" : "POST";
+      const url = currentStudent
+        ? `http://localhost:3001/students/${currentStudent.id}`
+        : "http://localhost:3001/students";
+      const response = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -68,8 +75,10 @@ function App() {
     }
   };
 
-  const editStudent = (id: number) => {
-    alert(`you pressed ${id}`);
+  const editStudent = (student: StudentData) => {
+    setCurrentStudent(student);
+    reset(student);
+    setOpen(true);
   };
 
   const deleteStudent = async (id: number) => {
@@ -111,7 +120,7 @@ function App() {
         {classData ? (
           <StudentTable
             classData={classData}
-            editStudent={editStudent}
+            editStudent={(student) => editStudent(student)}
             deleteStudent={deleteStudent}
           />
         ) : (
@@ -130,7 +139,14 @@ function App() {
         >
           Inserir Aluno
         </button>
-        <Modal open={open} onClose={() => setOpen(false)} center>
+        <Modal
+          open={open}
+          onClose={() => {
+            setOpen(false);
+            setCurrentStudent(null);
+          }}
+          center
+        >
           <form
             onSubmit={handleSubmit(submitStudentData)}
             className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg"
