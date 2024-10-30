@@ -3,6 +3,6 @@ import alunoRouter from './aluno.routes.js';
 
 
 const routes = Router();
-routes.use('/aluno', alunoRouter);
+routes.use('/alunos', alunoRouter);
 
 export default routes;
