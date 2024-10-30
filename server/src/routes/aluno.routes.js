@@ -3,14 +3,14 @@ import { validateAluno } from "../middlewares/validation.js";
 import {
   alunoCreate,
   // alunoDestroy,
-  // alunoIndex,
+  alunoIndex,
   // alunoUpdate,
 } from "../controllers/alunoController.js";
 
 const alunoRouter = Router();
 
 alunoRouter
-  // .get('/', alunoIndex)
+  .get('/', alunoIndex)
   .post("/", validateAluno, alunoCreate);
 // .put('/update/:id', alunoUpdate)
 // .delete('/:id', alunoDestroy)
