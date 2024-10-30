@@ -2,9 +2,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { StudentData } from "./types/types";
 import Disciplines from "./components/Disciplines";
 import formatStudentData from "./utils/formatStudentData";
+import { useEffect } from "react";
 
 function App() {
   const { register, handleSubmit, setFocus, reset } = useForm<StudentData>();
+
+  useEffect(() => {
+    setFocus("nome");
+  }, []);
 
   const submitStudentData: SubmitHandler<StudentData> = async (data) => {
     reset();
