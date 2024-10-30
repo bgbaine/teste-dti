@@ -48,7 +48,7 @@ const StudentTable: React.FC<StudentTableProps> = ({
               classData.classAverageBySubject
             );
             const rowClass =
-              student.frequencia < 75
+              Number(student.frequencia) < 75
                 ? "bg-red-300 hover:bg-red-200"
                 : studentAverage > classAverage
                 ? "bg-green-300 hover:bg-green-200"
