@@ -101,14 +101,29 @@ export const studentCreate = async (req, res) => {
   }
 };
 
-// export const studentDestroy = async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     await prisma.aluno.delete({ where: { id: Number(id) } });
-//     res.status(200).json("Aluno deletado com sucesso!");
-//   } catch (error) {
-//     res
-//       .status(500)
-//       .json(`Desculpe, ocorreu um erro no servidor! Erro: ${error}`);
-//   }
-// };
+export const studentDestroy = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.aluno.delete({ where: { id: Number(id) } });
+    res.status(200).json("Aluno deletado com sucesso!");
+  } catch (error) {
+    res
+      .status(500)
+      .json(`Desculpe, ocorreu um erro no servidor! Erro: ${error}`);
+  }
+};
+
+export const studentEdit = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const student = await prisma.aluno.update({
+      where: { id: Number(id) },
+      data: req.body,
+    });
+    res.status(200).json(student);
+  } catch (error) {
+    res
+      .status(500)
+      .json(`Desculpe, ocorreu um erro no servidor! Erro: ${error}`);
+  }
+};
