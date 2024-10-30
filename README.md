@@ -63,16 +63,24 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 3. Procure o arquivo `.env.example`, abra-o e ele deve estar assim:
     ```bash
     DATABASE_URL="mysql://<SEU-USUARIO>:<SUA-SENHA>@localhost:3306/<NOME-DO-BANCO>"
-    PORT=<PORTA-DE-ESCOLHA>
     ```
 
 4. Crie um arquivo chamado `.env` e cole o conteúdo copiado, substituindo os campos pelos seus dados:
     ```bash
     DATABASE_URL="mysql://carlos:senhaforte@localhost:3306/banco-dti"
-    PORT=3001
     ```
 
-   - Se nenhuma porta for informada, o Backend será configurado na porta 3000.
+4. Execute o comando a seguir, para aplicar a migration (criar o banco):
+    ```bash
+    npx prisma migrate deploy
+    ```
+
+5. Por fim, gere  o Prisma client com o comando:
+    ```bash
+    npx prisma generate
+    ```
+
+   - Lembre-se de executar a etapas 4 e 5 com o servidor desligado.
 
 ### Configurando o Frontend
 
